@@ -1,0 +1,27 @@
+{
+  "_comment": "Simple packer template to generate a docker image.",
+  "builders": [
+    {
+      "type": "docker",
+      "image": "ubuntu",
+      "export_path": "image.tar"
+    }
+  ],
+
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+          "sudo apt-get -y update",
+          "sudo apt-get install -y python-pip python-dev",
+          "sudo pip install ansible"
+      ]
+    },
+    {
+        "type": "file",
+        "source": "/tmp/test.txt",
+        "destination": "/copied_test.ext"
+    }
+  ]
+}
+
