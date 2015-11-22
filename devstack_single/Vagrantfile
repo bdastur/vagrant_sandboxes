@@ -1,0 +1,59 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+### SET GLOBAL VARIABLES ###
+
+# Set network info
+HOST_IP = "192.168.33.2"
+DNS = "10.0.2.3"
+PUBLIC_NETWORK = "192.168.20"
+VM_NAME = "devstack"
+
+# Set DevStack info
+DEVSTACK_BRANCH = "master"
+DEVSTACK_PASSWORD = "stack"
+
+#### BEGIN VAGRANT HW CONFIG ###
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/trusty64"
+
+  HOSTNAME = "devstackhost"
+  # Define vagrant host 1
+  config.vm.define "#{HOSTNAME}" do |host|
+    host.vm.box = "ubuntu/trusty64"
+    host.vm.hostname = "#{HOSTNAME}"
+    host.vm.network "private_network", ip: "#{HOST_IP}"
+    host.vm.network "private_network", ip: "#{PUBLIC_NETWORK}.2", netmask: "255.255.255.0", auto_config: false
+    host.vm.provision :shell, path: "bootstrap_devstack.sh"
+  
+    # Additional configurations.
+    # host1.vm.network "forwarded_port", guest: 80, host: 8080
+    # host1.vm.box_check_update = false
+    # host1.vm.synced_folder "../data", "/vagrant_data"
+
+    # Virtualbox specific settings.
+    config.vm.provider :virtualbox do |vb|
+      # Label the virtual machine
+      vb.name = "#{HOSTNAME}"
+    
+      #Optional: Enable virtual box GUI on boot. i.e not headless.
+      vb.gui = true
+
+      # Set CPU and Memory size for the virtual machine.
+      # Follow VBoxManage guide for more options.
+      # http://www.virtualbox.org/manual/ch08.html
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--memory", "2048"]
+      vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+    end
+  end 
+  # host1 definition end.
+
+  # Suppress tty messages
+  config.vm.provision "fix-no-tty", type: "shell" do |s|
+    s.privileged = false
+    s.inline = "sudo sed -i '/tty/!s/mesg n/tty -s \\&\\& mesg n/' /root/.profile"
+  end
+end
