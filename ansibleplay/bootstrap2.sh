@@ -2,7 +2,7 @@
 ############################################
 # Vagrant bootstrap file.
 ############################################
-echo "Starting Vagrant VM (Orchestrator) Bootstrap"
+echo "Starting vagrant Bootstrap"
 
 echo "Done!"
 
