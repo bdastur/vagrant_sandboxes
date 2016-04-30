@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
 
   config.vm.define "orchestrator" do |orchestrator|
-    orchestrator.vm.box = "ubuntu/trusty64"
+    orchestrator.vm.box = "centos/7"
     orchestrator.vm.hostname = "orchestrator"
     orchestrator.vm.network "private_network", ip: "192.168.67.10"
     #orchestrator.vm.synced_folder  ".", "/vagrant_data"
@@ -38,6 +38,27 @@ Vagrant.configure(2) do |config|
     config.vm.provider :virtualbox do |vb|
         # Lable the virtual machine
         vb.name = "host2"
+
+        # Optional: Enable the Virtual Box GUI on boot, ie not "headless"
+        # vb.gui = true
+
+        # Set CPU and memory size.
+        vb.customize ["modifyvm", :id, "--cpus", "1"]
+        vb.customize ["modifyvm", :id, "--memory", 1024]
+
+    end
+    #Vbox settings.
+  end
+
+  config.vm.define "host3" do |host3|
+    host3.vm.box = "centos/7"
+    host3.vm.hostname = "host3"
+    host3.vm.network "private_network", ip: "192.168.67.101"
+    host3.vm.provision :shell, path: "bootstrap3.sh"
+    # virtual-box specific settings
+    config.vm.provider :virtualbox do |vb|
+        # Lable the virtual machine
+        vb.name = "host3"
 
         # Optional: Enable the Virtual Box GUI on boot, ie not "headless"
         # vb.gui = true
