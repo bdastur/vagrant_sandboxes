@@ -58,4 +58,6 @@ target/
 
 packerhost/.vagrant/*
 ansibleplay/.vagrant/*
+*id_rsa*
+
 
