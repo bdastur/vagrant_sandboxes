@@ -19,4 +19,7 @@ export ANSIBLE_HOST_KEY_CHECKING=False
 
 pip install jinja2
 pip install pyYaml
+pip install paramiko
+pip install httplib2
+pip install six
 
