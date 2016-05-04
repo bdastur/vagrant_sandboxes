@@ -1,0 +1,12 @@
+[cloudfire:children]
+ash2
+phx2
+
+
+[ash2]
+192.168.67.100
+
+
+[phx2]
+192.168.67.101
+
