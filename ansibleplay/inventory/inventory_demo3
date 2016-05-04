@@ -1,0 +1,17 @@
+[cloudfire:children]
+ash2
+phx2
+
+
+[ash2:vars]
+quota_vm=100
+pkglist="openstack-nova-novncproxy", "openstack-nova-conductor", "openstack-nova-objectstore"
+
+
+[ash2]
+192.168.67.100
+
+
+[phx2]
+192.168.67.101  quota_vm=50
+

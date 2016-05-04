@@ -1,0 +1,27 @@
+# Example to introduce:
+# - Conditionals
+
+- name: Simple Play
+  hosts: all
+  tasks:
+    - name: Check if a package exist
+      shell: rpm -qa | grep openstack
+      register: pkgexist
+      when: ansible_os_family == "RedHat"
+
+    - name: List packages
+      debug:
+        msg: "pkglist: {{ pkglist }}"
+      when: pkglist is defined
+
+    - name: Check from list of packages.
+      shell: rpm -qa | grep {{ item }}
+      register: pkglistexist
+      with_items: pkglist 
+      when: pkglist is defined 
+
+    - name: Print vm quota value
+      debug:
+        msg: "output: {{ pkgexist }}"
+
+
