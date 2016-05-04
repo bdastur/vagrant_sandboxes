@@ -17,4 +17,8 @@
       debug:
         msg: "Output data: {{ cmd_output.stdout }}"
 
+    - name: Print vm quota value
+      debug:
+        msg: "VM Quota: {{ quota_vm }}"
+
 
