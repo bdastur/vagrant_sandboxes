@@ -1,0 +1,20 @@
+# Example to introduce:
+# - command module
+# - register variable
+# - debug module
+
+- name: Simple Play
+  hosts: all
+  tasks:
+    - name: Connectivity test
+      ping:
+
+    - name: List vagrant home and save data in a variable.
+      command: ls /home/vagrant
+      register: cmd_output
+
+    - name: Print the output
+      debug:
+        msg: "Output data: {{ cmd_output.stdout }}"
+
+
