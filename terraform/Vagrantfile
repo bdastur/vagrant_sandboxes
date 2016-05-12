@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos/7"
+
+  config.vm.define "terraformvm" do |terraformvm|
+    terraformvm.vm.box = "centos/7"
+    terraformvm.vm.hostname = "terraformvm"
+    terraformvm.vm.network "private_network", ip: "192.168.67.10"
+    terraformvm.vm.provision :shell, path: "bootstrap.sh"
+    # virtual-box specific settings
+    config.vm.provider :virtualbox do |vb|
+
+      # Lable the virtual machine
+      vb.name = "terraformvm"
+
+      # Optional: Enable the Virtual Box GUI on boot, i.e. not "headless"
+      # vb.gui = true
+
+      # Set CPU and memory size
+      vb.customize ["modifyvm", :id, "--cpus", "1"]
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+
+      # Enable promiscuous mode on eth2 for floating IPs to be accessible
+      # vb.customize ["modifyvm", :id, "--nicpromisc3", "allow-all"]
+    end
+  end
+end
