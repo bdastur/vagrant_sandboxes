@@ -59,6 +59,7 @@ target/
 packerhost/.vagrant/*
 ansibleplay/.vagrant/*
 terraform/.vagrant/*
+terraform/creds
 *id_rsa*
 
 *DS_Store*
